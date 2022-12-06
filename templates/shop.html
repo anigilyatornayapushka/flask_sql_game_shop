@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style2.css') }}">
+</head>
+<body>
+
+    <aside>
+
+        <div class="array_games">
+            {% for i in range(10, 0, -1) %}
+                {% for game in games %}
+                    {% if game[3] == i %}
+                        <div class="game_mini">
+                            <div class="square" style="margin: 0px 15px 0px 15px;width: 10px; height: 10px; background: {{ all_colors[game[3]] }}"></div>
+                            <span class="txt">{{ game[1] }}</span>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </div>
+
+    </aside>
+
+    <div>
+
+        <main>
+            {% for game in games %}
+                <div class="card">
+                    <span class="card_txt">{{ game[1] }}</span>
+                    <span class="card_txt" id="second_column">{{ game[2] }}</span>
+                    <span class="card_txt">{{ game[3] }} / 10</span>
+                    <span class="card_txt">{{ genres[game[4]-1][1] }}</span>
+                </div>
+            {% endfor %}
+        </main>
+    
+        <footer>
+
+            <form class="big_panel" method="POST">
+                <div class="panel">
+                    <span class="text_footer">Try to create new game</span>
+                    <input type="text" name="game_title" placeholder="title of the game" required>
+                    <input type="text" name="game_description" placeholder="description of the game" required>
+                    <div class="rate">
+                        <span class="txt">rating (1 - 10)</span>
+                        <input type="range" name="rating" min="1" max="10" required>
+                    </div>
+                    <input type="submit" value="Create new game">
+                </div>
+                
+                <div class="lit_panel">
+                    <span class="text_footer">Choose genre</span>
+                    {% for genre in genres %}
+                        {% if genre[0] == 1 %}
+                            <label><input type="radio" name="choose_genre" value="{{ genre[0] }}" checked><span class="txt">{{ genre[1] }}</span></label>
+                        {% else %}
+                            <label><input type="radio" name="choose_genre" value="{{ genre[0] }}"><span class="txt">{{ genre[1] }}</span></label>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </form>
+
+            <form class="panel" method="POST">
+                <span class="text_footer">Try to create new genre</span>
+                <input type="text" name="genre_title" placeholder="title of the genre" required>
+                <input type="text" name="genre_description" placeholder="description of the genre" required>
+                <input type="submit" value="Create new genre">
+            </form>
+
+        </footer>
+
+    </div>
+    
+</body>
+</html>
